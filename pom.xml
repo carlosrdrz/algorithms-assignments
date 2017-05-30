@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>es.carlosrdrz</groupId>
-    <artifactId>deque</artifactId>
+    <artifactId>algorithms-assigments</artifactId>
     <version>0.1</version>
     <packaging>jar</packaging>
 

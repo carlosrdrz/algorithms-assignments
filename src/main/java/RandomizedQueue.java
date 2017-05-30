@@ -10,11 +10,9 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         private int iteratorIndex = 0;
 
         public RandomizedQueueIterator() {
-            int iteratorListIndex = 0;
-
             for (int i = 0; i < list.length; i++) {
                 if (list[i] != null) {
-                    iteratorList[iteratorListIndex++] = list[i];
+                    iteratorList[i] = list[i];
                 }
             }
 
@@ -73,23 +71,12 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             throw new NoSuchElementException();
         }
 
-        System.out.println("----------");
-        System.out.println(size);
-        for (Item s : list) {
-            System.out.println(s);
-        }
-        System.out.println("----------");
-
-        int index = StdRandom.uniform(0, list.length);
-        while (list[index] == null) {
-            index = StdRandom.uniform(0, list.length);
-        }
-
+        int index = StdRandom.uniform(0, size);
         Item aux = list[index];
-        list[index] = null;
-        size--;
+        list[index] = list[size - 1];
+        list[size - 1] = null;
 
-        if (size < list.length / 4) {
+        if (--size < list.length / 4) {
             resize(list.length / 2);
         }
 
@@ -100,11 +87,10 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     private void resize(int newSize) {
         Item[] aux = list;
         list = (Item[]) new Object[newSize];
-        int newListIndex = 0;
 
         for (int i = 0; i < aux.length; i++) {
             if (aux[i] != null) {
-                list[newListIndex++] = aux[i];
+                list[i] = aux[i];
             }
         }
     }
@@ -114,14 +100,8 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             throw new NoSuchElementException();
         }
 
-        int index = StdRandom.uniform(0, list.length);
-        while (list[index] == null) {
-            index = StdRandom.uniform(0, list.length);
-        }
-
-        Item aux = list[index];
-        list[index] = null;
-        return aux;
+        int index = StdRandom.uniform(0, size);
+        return list[index];
     }
 
     public Iterator<Item> iterator() {
@@ -174,24 +154,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
         StdOut.print("isEmpty: ");
         StdOut.println(randomizedQueue.isEmpty());
-
-        StdOut.println("Random enqueues deques");
-
-        for (int i = 0; i < 1000; i++) {
-            StdOut.print(".");
-
-            int a = StdRandom.uniform(0, 2);
-
-            try {
-                if (a > 0) {
-                    randomizedQueue.enqueue("lel");
-                } else {
-                    randomizedQueue.dequeue();
-                }
-            } catch(NoSuchElementException e) {
-                StdOut.print("-");
-            }
-        }
 
         StdOut.println("Finished");
     }
